@@ -8,12 +8,18 @@ import org.example.pelicula.ResumenContenido;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Plataforma {
     //atributo
     private String nombre;
     private List<Pelicula> contenido;
+    //añadiendo un nuevo maoa
+    private Map<Pelicula, Integer> visualizaciones;
+
+    //pelicula, visualizaciones
+    //<Pelicula.titulo, >
 
     //constructores
 
@@ -43,6 +49,20 @@ public class Plataforma {
         //add me sirve agregar un elemento al contenido
         this.contenido.add(pelicula); //ya no lee esto el trow
 
+    }
+
+    //polimorfismo
+    // para la reproduccion depeliculas
+    public void  reproducir(Pelicula contenido){
+        //getdefault para saber como esta en el momento
+        //es 0 porque si no tiene nada es que nunca lo han visto
+        int conteoActual = visualizaciones.getOrDefault(contenido, 0);
+        System.out.println(contenido.getTitulo() + "ha sido reproducido"+ conteoActual + " veces");
+
+        //manejo de ingreso
+        visualizaciones.put(contenido, conteoActual+1);
+
+        contenido.reproducir();
     }
 
 

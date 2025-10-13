@@ -27,6 +27,7 @@ public class Main {
     public static final int VER_POPULARES = 7;
     public static final int ELIMINAR = 8;
     public static final int SALIR = 9;
+    public static final int REPRODUCIR = 11;
 
     public static void main(String[] args) {
 
@@ -54,6 +55,9 @@ public class Main {
                     7. Buscar populares por calificacion
                     8. Eliminar
                     9. Salir
+                    10. Buscar solo populares mayores a 4
+                    11. Reproducir
+                    
                     """);
 
             switch (opcionElegida){
@@ -113,6 +117,19 @@ public class Main {
                     contenidoPorGenero.forEach((Pelicula contenido)
                             -> System.out.println(contenido.obtenerFichaTecnica() + " \n"));
                 }
+                case REPRODUCIR->{
+                    String nombre =ScannerUtils.capturarTexto("\nIngrese el nombre");
+                    Pelicula contenido = plataforma.buscarPorTitulo(nombre);
+
+                    //hacemos una validacion
+                    if (contenido!= null){
+                        //la pelicula existe y utilizamos el metodo reproducir
+                        plataforma.reproducir(contenido);
+                    } else {
+                        System.out.println(nombre + " No existe");
+                    }
+                }
+
                 case VER_POPULARES -> {
                     //llamo a mifuncion que esta en la platadorma
                     List<Pelicula> contenidoPopulares = plataforma.getPopulares();
