@@ -5,10 +5,7 @@ import org.example.pelicula.Genero;
 import org.example.pelicula.Pelicula;
 import org.example.pelicula.ResumenContenido;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Plataforma {
@@ -27,6 +24,7 @@ public class Plataforma {
     public Plataforma(String nombre) {
         this.nombre = nombre;
         this.contenido = new ArrayList<>(); //el contenido es un array vacio para que yo incluya la pelicula
+        this.visualizaciones = new HashMap<>();
     }
 
     //metodos
