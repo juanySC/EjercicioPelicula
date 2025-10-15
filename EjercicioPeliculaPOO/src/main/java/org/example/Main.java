@@ -7,6 +7,11 @@ import org.example.plataforma.Calidad;
 import org.example.plataforma.Idioma;
 import org.example.plataforma.Plataforma;
 import org.example.util.ScannerUtils;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -45,7 +50,7 @@ public class Main {
         while (true){
             //hasta que
             int opcionElegida = ScannerUtils.capturarNumero("""
-                    Ingrese una de las siguientes opciones
+                   \n Ingrese una de las siguientes opciones
                     1. Agregar contenido
                     2. Mostrar todo
                     3. Buscar titulo
@@ -169,7 +174,7 @@ public class Main {
 
     /**cargarPelicula solo puede usarse en esta clase main, SIMULA UNA BASE DEDATOS**/
     private static  void cargarPeliculas(Plataforma plataforma){
-        //ouedo pasarle el objeto directamente
+        /*ouedo pasarle el objeto directamente
         plataforma.agregar(new Pelicula("Shrek", 90, Genero.ACCCION, 4.5, Idioma.ESPANIOL, Calidad.CL_420));
         plataforma.agregar(new Pelicula("Matrix", 136, Genero.ANIMADA,4.8, Idioma.FRANCES, Calidad.CL_1080));
         plataforma.agregar(new Pelicula("Forrest Gump", 142, Genero.ACCCION, 4.9, Idioma.KICHE, Calidad.CL_720));
@@ -183,7 +188,43 @@ public class Main {
         plataforma.agregar(new Pelicula("Inception", 148, Genero.CIENCIA, 4.9, Idioma.INGLES, Calidad.CL_720));
         plataforma.agregar(new Pelicula("Toy Story", 81, Genero.COMEDIA, 4.5, Idioma.INGLES, Calidad.CL_420));
         plataforma.agregar(new Pelicula("Joker", 122, Genero.TERROR, 4.4, Idioma.FRANCES, Calidad.CL_720));
+*/
+        //leuendo el archivo
 
+        try {
+            List<String> lines = Files.readAllLines(Paths.get("contenido.txt"));
+
+
+            lines.forEach(linea ->{
+                String[] datos = linea.split("\\|");
+            //pregunto
+            if (datos.length == 5){
+
+
+
+
+                String titulo = datos[0];
+                int duracion = Integer.parseInt(datos[1]);
+                Genero genero = Genero.valueOf(datos[2].toUpperCase());
+                //usamos isBlank porque solo esta en blanco y no es que se anulo
+                double calificacion = datos[3].isBlank() ? 0: Double.parseDouble(datos[3]);
+                LocalDate fechaEstreno = LocalDate.parse(datos[4]);
+
+                //creamos la pelicula
+                Pelicula pelicula = new Pelicula(titulo, duracion, genero, calificacion,fechaEstreno);
+
+                //agregamos la plataforma
+                plataforma.agregar(pelicula);
+
+
+            }
+            });
+
+            //lines.forEach(linea -> System.out.println(linea));
+
+        }catch (IOException e){
+            System.out.println("Error leyendo el archivo " + e.getMessage());
+        }
 
     }
 }

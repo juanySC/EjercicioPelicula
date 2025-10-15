@@ -40,6 +40,15 @@ public class Pelicula {
         this.disponible = disponible;
     }
 
+    //para el uso del nuevo txt
+    public Pelicula(String titulo, int duracion, Genero genero, double calificacion, LocalDate fechaEstreno) {
+        this.titulo = titulo;
+        this.duracion = duracion;
+        this.genero = genero;
+        this.calificacion = calificacion;
+        this.fechaEstreno = fechaEstreno;
+    }
+
     //creacion de metodos
 
     /**reproducir: imprime en la terminal el titulo**/
