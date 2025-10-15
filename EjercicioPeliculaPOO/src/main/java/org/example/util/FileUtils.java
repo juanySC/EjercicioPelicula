@@ -6,12 +6,42 @@ import org.example.pelicula.Pelicula;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtils {
 
+    /**metodo que permite escribir un archivo**/
+    public static void escribirContenido(Pelicula contenido){
+        //String linea = contenido. getTitulo() + "|" + contenido.getDuracion() + "|" + contenido.getGenero() + "|" +
+          //      contenido.getCalificacion() + "|" + contenido.getFechaEstreno() + "\n";
+
+    //metodo join que arma toda mi linea, o sea todo lo que ira en la inormacion de esa linea
+        String linea = String.join("|",
+                contenido.getTitulo(),
+                String.valueOf(contenido.getDuracion()),
+                contenido.getGenero().toString(),
+                String.valueOf(contenido.getCalificacion()),
+                contenido.getFechaEstreno().toString()
+                ) + "\n";
+
+        //me ayuda a imprimir linea por linea para mi informacion
+        System.out.println(linea + "pelicula escrita en el archivo");
+
+        try {
+            Files.writeString(Paths.get("contenido.txt"),
+                    linea + System.lineSeparator(),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.APPEND
+                    );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**leerContenido nos ayuda a crear una lista sobre lo que teemos en el archivo**/
     public static List<Pelicula> leerContenido(){
 
         //array para guardar las peliculas

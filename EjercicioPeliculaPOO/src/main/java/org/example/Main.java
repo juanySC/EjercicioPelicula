@@ -79,7 +79,8 @@ public class Main {
 
                     //agregamos una excepcion
                     try {
-                        plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion, idioma, calidad));
+                        plataforma.agregar(new Pelicula(nombre,duracion ,genero,calificacion, LocalDate.now()));
+                        //plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion, idioma, calidad));
                     } catch (Exception e){
                         //que atrape la excepcion qu enosostos ya creamos
 

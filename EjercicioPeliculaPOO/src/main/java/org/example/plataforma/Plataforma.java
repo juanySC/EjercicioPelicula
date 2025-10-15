@@ -4,6 +4,7 @@ import org.example.exception.PeliculaExistenteExcepcion;
 import org.example.pelicula.Genero;
 import org.example.pelicula.Pelicula;
 import org.example.pelicula.ResumenContenido;
+import org.example.util.FileUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,6 +44,8 @@ public class Plataforma {
             throw new PeliculaExistenteExcepcion(pelicula.getTitulo());
         }
 
+        //uso FilUtils para escribir en el archivo
+        FileUtils.escribirContenido(pelicula);
 
         //add me sirve agregar un elemento al contenido
         this.contenido.add(pelicula); //ya no lee esto el trow
