@@ -1,7 +1,7 @@
 package org.example.pelicula;
 
 public enum Genero {
-    ACCCION,
+    ACCION,
     COMEDIA,
     ANIMADA,
     TERROR,

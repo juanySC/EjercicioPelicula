@@ -6,8 +6,10 @@ import org.example.pelicula.ResumenContenido;
 import org.example.plataforma.Calidad;
 import org.example.plataforma.Idioma;
 import org.example.plataforma.Plataforma;
+import org.example.util.FileUtils;
 import org.example.util.ScannerUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -189,42 +191,11 @@ public class Main {
         plataforma.agregar(new Pelicula("Toy Story", 81, Genero.COMEDIA, 4.5, Idioma.INGLES, Calidad.CL_420));
         plataforma.agregar(new Pelicula("Joker", 122, Genero.TERROR, 4.4, Idioma.FRANCES, Calidad.CL_720));
 */
-        //leuendo el archivo
 
-        try {
-            List<String> lines = Files.readAllLines(Paths.get("contenido.txt"));
-
-
-            lines.forEach(linea ->{
-                String[] datos = linea.split("\\|");
-            //pregunto
-            if (datos.length == 5){
-
-
-
-
-                String titulo = datos[0];
-                int duracion = Integer.parseInt(datos[1]);
-                Genero genero = Genero.valueOf(datos[2].toUpperCase());
-                //usamos isBlank porque solo esta en blanco y no es que se anulo
-                double calificacion = datos[3].isBlank() ? 0: Double.parseDouble(datos[3]);
-                LocalDate fechaEstreno = LocalDate.parse(datos[4]);
-
-                //creamos la pelicula
-                Pelicula pelicula = new Pelicula(titulo, duracion, genero, calificacion,fechaEstreno);
-
-                //agregamos la plataforma
-                plataforma.agregar(pelicula);
-
-
-            }
-            });
-
-            //lines.forEach(linea -> System.out.println(linea));
-
-        }catch (IOException e){
-            System.out.println("Error leyendo el archivo " + e.getMessage());
-        }
+        //se obtiene la infomacio en get y aparte se actualiza(obtener) en el set
+        //lleno el coentnido con loq ue venga de FileUtils
+        //devuelve una referencia al listado de peliculas
+       plataforma.getContenido().addAll(FileUtils.leerContenido());
 
     }
 }
