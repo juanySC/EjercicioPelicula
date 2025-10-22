@@ -3,6 +3,7 @@ package org.example.util;
 import org.example.pelicula.Documental;
 import org.example.pelicula.Genero;
 import org.example.pelicula.Contenido;
+import org.example.pelicula.Pelicula;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -69,21 +70,35 @@ public class FileUtils {
 
             lines.forEach(linea ->{
                 String[] datos = linea.split("\\|");
+
+                //tengo que ripo de contenido traigo
+                String tipoContenido = datos[0];
+
                 //pregunto
-                if (datos.length == 5){
+                if (("PELICULA".equals(tipoContenido) && datos.length == 6 ) || ("DOCUMENTAL".equals(tipoContenido) && datos.length ==7)){
 
-                    String titulo = datos[0];
-                    int duracion = Integer.parseInt(datos[1]);
-                    Genero genero = Genero.valueOf(datos[2].toUpperCase());
+                    String titulo = datos[1];
+                    int duracion = Integer.parseInt(datos[2]);
+                    Genero genero = Genero.valueOf(datos[3].toUpperCase());
                     //usamos isBlank porque solo esta en blanco y no es que se anulo
-                    double calificacion = datos[3].isBlank() ? 0: Double.parseDouble(datos[3]);
-                    LocalDate fechaEstreno = LocalDate.parse(datos[4]);
+                    double calificacion = datos[4].isBlank() ? 0: Double.parseDouble(datos[3]);
+                    LocalDate fechaEstreno = LocalDate.parse(datos[5]);
 
-                    //creamos la pelicula
-                    Contenido pelicula = new Contenido(titulo, duracion, genero, calificacion,fechaEstreno);
+                    //creamos un documental o pelicula
+                    //Contenido pelicula = new Contenido(titulo, duracion, genero, calificacion,fechaEstreno);
 
+                    Contenido contenido;
+
+                    if ("PELICULA".equals(tipoContenido)){
+                        contenido = new Pelicula(titulo, duracion, genero, calificacion);
+                    } else {
+                        String narrador = datos[6];
+                        contenido= new Documental(titulo, duracion, genero, calificacion, narrador);
+                    }
+
+                    contenido.setFechaEstreno(fechaEstreno);
                     //agregamos la plataforma
-                    contenidoDesdeArchivo.add(pelicula);
+                    contenidoDesdeArchivo.add(contenido);
 
 
                 }

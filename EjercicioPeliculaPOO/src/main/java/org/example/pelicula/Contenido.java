@@ -19,6 +19,7 @@ public class Contenido {
     private Idioma idioma;
     private Calidad calidad;
 
+
     // metodo y no retorna nada
     public Contenido(String titulo, int duracion, Genero genero, double calificacion, Idioma idioma, Calidad calidad){
         this.titulo = titulo;
@@ -148,4 +149,9 @@ public class Contenido {
     public void setCalidad(Calidad calidad) {
         this.calidad = calidad;
     }
+
+    public void setFechaEstreno(LocalDate fechaEstreno) {
+        this.fechaEstreno = fechaEstreno;
+    }
+
 }
