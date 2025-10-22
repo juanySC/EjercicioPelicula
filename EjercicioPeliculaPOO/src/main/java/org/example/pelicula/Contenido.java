@@ -44,7 +44,10 @@ public class Contenido {
         this.titulo = titulo;
         this.duracion = duracion;
         this.genero = genero;
+        //agrego la fecha
+        this.fechaEstreno = LocalDate.now();
         this.calificacion = calificacion;
+
         //this.disponible = disponible;
     }
 

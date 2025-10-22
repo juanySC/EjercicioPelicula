@@ -87,8 +87,7 @@ public class Main {
                             String narrador = ScannerUtils.capturarTexto("Ingrese el nombre del narrador del documental");
                             plataforma.agregar(new Documental(nombre,duracion,genero,calificacion,narrador));
                         }
-
-
+                        
 
                         //plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion, idioma, calidad));
                     } catch (Exception e){
