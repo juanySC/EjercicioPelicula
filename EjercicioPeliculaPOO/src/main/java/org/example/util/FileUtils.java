@@ -81,24 +81,24 @@ public class FileUtils {
                     int duracion = Integer.parseInt(datos[2]);
                     Genero genero = Genero.valueOf(datos[3].toUpperCase());
                     //usamos isBlank porque solo esta en blanco y no es que se anulo
-                    double calificacion = datos[4].isBlank() ? 0: Double.parseDouble(datos[3]);
+                    double calificacion = datos[4].isBlank() ? 0: Double.parseDouble(datos[4]);
                     LocalDate fechaEstreno = LocalDate.parse(datos[5]);
 
                     //creamos un documental o pelicula
                     //Contenido pelicula = new Contenido(titulo, duracion, genero, calificacion,fechaEstreno);
 
-                    Contenido contenido;
+                    Contenido pelicula;
 
                     if ("PELICULA".equals(tipoContenido)){
-                        contenido = new Pelicula(titulo, duracion, genero, calificacion);
+                        pelicula = new Pelicula(titulo, duracion, genero, calificacion);
                     } else {
                         String narrador = datos[6];
-                        contenido= new Documental(titulo, duracion, genero, calificacion, narrador);
+                        pelicula= new Documental(titulo, duracion, genero, calificacion, narrador);
                     }
 
-                    contenido.setFechaEstreno(fechaEstreno);
+                    pelicula.setFechaEstreno(fechaEstreno);
                     //agregamos la plataforma
-                    contenidoDesdeArchivo.add(contenido);
+                    contenidoDesdeArchivo.add(pelicula);
 
 
                 }

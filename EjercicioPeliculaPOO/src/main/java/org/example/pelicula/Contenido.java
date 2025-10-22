@@ -154,4 +154,8 @@ public class Contenido {
         this.fechaEstreno = fechaEstreno;
     }
 
+    //public void setFechaEstreno(LocalDate fechaEstreno) {
+     //   this.fechaEstreno = fechaEstreno;
+    //}
+
 }
