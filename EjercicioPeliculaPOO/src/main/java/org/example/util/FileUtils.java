@@ -1,5 +1,6 @@
 package org.example.util;
 
+import org.example.pelicula.Documental;
 import org.example.pelicula.Genero;
 import org.example.pelicula.Contenido;
 
@@ -26,6 +27,21 @@ public class FileUtils {
                 String.valueOf(contenido.getCalificacion()),
                 contenido.getFechaEstreno().toString()
                 ) + "\n";
+
+        //creando linea final
+        String lineaFinal;
+
+        //polimorfismo
+        //instanceof me dice que tipo d ela clase es: pelicula o documental  del contenido
+        if (contenido instanceof Documental){
+            //casteando, se crea una variable documental que es igual al contenido casteado
+            //como no s epuede igual docuemnal con contenido directamente, es por eso que se castea
+            Documental documental = (Documental) contenido;
+            //liena normal ocn el que estamos trabajando desde un inicio
+            lineaFinal = "DOCUMENTAL" + "|" + linea + "|"+ documental.getNarrador();
+        } else{
+            lineaFinal = "PELICULA" + "|" + linea;
+        }
 
         //me ayuda a imprimir linea por linea para mi informacion
         System.out.println(linea + "pelicula escrita en el archivo");
