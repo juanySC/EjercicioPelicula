@@ -1,18 +1,12 @@
 package org.example;
 
-import org.example.pelicula.Genero;
-import org.example.pelicula.Pelicula;
-import org.example.pelicula.ResumenContenido;
+import org.example.pelicula.*;
 import org.example.plataforma.Calidad;
 import org.example.plataforma.Idioma;
 import org.example.plataforma.Plataforma;
 import org.example.util.FileUtils;
 import org.example.util.ScannerUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -69,6 +63,13 @@ public class Main {
 
             switch (opcionElegida){
                 case AGREGAR-> {
+                    //modificacion con herencia
+                    int tipoDeContenido = ScannerUtils.capturarNumero("""
+                            \nSeleccione el tipo de contenido a agregar:
+                            1. Pelicula
+                            2. Documental
+                            """);
+
                     String nombre = ScannerUtils.capturarTexto("Nombre de pelicula");
                     //Genero genero = Genero.valueOf(ScannerUtils.capturarTexto("Género del contenido"));
                     Genero genero = ScannerUtils.capturarGenero("Genero del contenido");
@@ -79,7 +80,16 @@ public class Main {
 
                     //agregamos una excepcion
                     try {
-                        plataforma.agregar(new Pelicula(nombre,duracion ,genero,calificacion, LocalDate.now()));
+                        //modicacion de la clase herencia
+                        if (tipoDeContenido == 1){
+                            plataforma.agregar(new Pelicula(nombre,duracion ,genero,calificacion));
+                        }else {
+                            String narrador = ScannerUtils.capturarTexto("Ingrese el nombre del narrador del documental");
+                            plataforma.agregar(new Documental(nombre,duracion,genero,calificacion,narrador));
+                        }
+
+
+
                         //plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion, idioma, calidad));
                     } catch (Exception e){
                         //que atrape la excepcion qu enosostos ya creamos
@@ -103,7 +113,7 @@ public class Main {
                 case BUSCARTITULO -> {
                     String nombreBuscado = ScannerUtils.capturarTexto("Ingrese el titulo  a buscar");
 
-                    Pelicula peliculaEcontrada = plataforma.buscarPorTitulo(nombreBuscado);
+                    Contenido peliculaEcontrada = plataforma.buscarPorTitulo(nombreBuscado);
 
                     //validacion si lo encuentra nos imprima el contenid
                     if (peliculaEcontrada != null){
@@ -116,18 +126,18 @@ public class Main {
                     //Genero generoBuscado = Genero.valueOf(ScannerUtils.capturarTexto("Genero del contenido a buscar: "));
                     Genero generoBuscado = ScannerUtils.capturarGenero("Genero a buscar");
                    //devuelve la lista o sea lo imprime                            //busca el genero que se busca
-                    List<Pelicula> contenidoPorGenero = plataforma.buscarPorGenero(generoBuscado);
+                    List<Contenido> contenidoPorGenero = plataforma.buscarPorGenero(generoBuscado);
                     //imprimo
                     //10 peliculas enocntradas para el genero accion
                     System.out.println("\n"+ contenidoPorGenero.size() + "encontrados para el genero: "+ generoBuscado);
 
                     //recorro
-                    contenidoPorGenero.forEach((Pelicula contenido)
+                    contenidoPorGenero.forEach((Contenido contenido)
                             -> System.out.println(contenido.obtenerFichaTecnica() + " \n"));
                 }
                 case REPRODUCIR->{
                     String nombre =ScannerUtils.capturarTexto("\nIngrese el nombre");
-                    Pelicula contenido = plataforma.buscarPorTitulo(nombre);
+                    Contenido contenido = plataforma.buscarPorTitulo(nombre);
 
                     //hacemos una validacion
                     if (contenido!= null){
@@ -140,27 +150,27 @@ public class Main {
 
                 case VER_POPULARES -> {
                     //llamo a mifuncion que esta en la platadorma
-                    List<Pelicula> contenidoPopulares = plataforma.getPopulares();
+                    List<Contenido> contenidoPopulares = plataforma.getPopulares();
 
-                    contenidoPopulares.forEach((Pelicula contenido) ->
+                    contenidoPopulares.forEach((Contenido contenido) ->
                             System.out.println(contenido.obtenerFichaTecnica()));
                 } case POPULARES_MAYORESA4 -> {
-                    List<Pelicula> contenidoPopular = plataforma.getPopulares();
-                    contenidoPopular.forEach((Pelicula contenido) -> System.out.println(contenido.obtenerFichaTecnica()));
+                    List<Contenido> contenidoPopular = plataforma.getPopulares();
+                    contenidoPopular.forEach((Contenido contenido) -> System.out.println(contenido.obtenerFichaTecnica()));
                 }
                 case BUSCAR_POR_MAYORDURACION -> {
-                    Pelicula peliculaMayorDuracion = plataforma.peliculaLarga();
+                    Contenido peliculaMayorDuracion = plataforma.peliculaLarga();
                     System.out.println(peliculaMayorDuracion != null? ("La pelicula mas larga es: " + peliculaMayorDuracion.obtenerFichaTecnica()): "No existe una pelicula con mayor duracion que el resto");
                 }
                 case BUSCAR_POR_MENORDURACION-> {
-                    Pelicula peliculaMenorDuracion = plataforma.peliculaLarga();
+                    Contenido peliculaMenorDuracion = plataforma.peliculaLarga();
                     System.out.println(peliculaMenorDuracion != null? ("La pelicula mas larga es: " + peliculaMenorDuracion.obtenerFichaTecnica()): "No existe una pelicula con mayor duracion que el resto");
                 }
                 case ELIMINAR -> {
                     String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del titulo a eliminar");
 
                     //guardar una pelicula
-                    Pelicula contenido = plataforma.buscarPorTitulo(nombreAEliminar);
+                    Contenido contenido = plataforma.buscarPorTitulo(nombreAEliminar);
 
                     if (contenido!= null){
                         plataforma.eliminar(contenido);

@@ -1,5 +1,5 @@
 package org.example.utilidades;
-import org.example.pelicula.Pelicula;
+import org.example.pelicula.Contenido;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +11,7 @@ public class Usuario {
 
     //metodo
     /**ver: visualizacion del nombre del usuario y a la vez llamo a la clase Pelicula**/
-    public void ver(Pelicula pelicula){
+    public void ver(Contenido pelicula){
         System.out.println(this.nombre + "Esta viendo...");
         pelicula.reproducir();
     }

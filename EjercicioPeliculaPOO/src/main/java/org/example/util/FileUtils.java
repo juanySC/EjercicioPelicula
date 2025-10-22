@@ -1,7 +1,7 @@
 package org.example.util;
 
 import org.example.pelicula.Genero;
-import org.example.pelicula.Pelicula;
+import org.example.pelicula.Contenido;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,7 +14,7 @@ import java.util.List;
 public class FileUtils {
 
     /**metodo que permite escribir un archivo**/
-    public static void escribirContenido(Pelicula contenido){
+    public static void escribirContenido(Contenido contenido){
         //String linea = contenido. getTitulo() + "|" + contenido.getDuracion() + "|" + contenido.getGenero() + "|" +
           //      contenido.getCalificacion() + "|" + contenido.getFechaEstreno() + "\n";
 
@@ -42,10 +42,10 @@ public class FileUtils {
     }
 
     /**leerContenido nos ayuda a crear una lista sobre lo que teemos en el archivo**/
-    public static List<Pelicula> leerContenido(){
+    public static List<Contenido> leerContenido(){
 
         //array para guardar las peliculas
-        List<Pelicula> contenidoDesdeArchivo = new ArrayList<>();
+        List<Contenido> contenidoDesdeArchivo = new ArrayList<>();
 
         try {
             List<String> lines = Files.readAllLines(Paths.get("contenido.txt"));
@@ -64,7 +64,7 @@ public class FileUtils {
                     LocalDate fechaEstreno = LocalDate.parse(datos[4]);
 
                     //creamos la pelicula
-                    Pelicula pelicula = new Pelicula(titulo, duracion, genero, calificacion,fechaEstreno);
+                    Contenido pelicula = new Contenido(titulo, duracion, genero, calificacion,fechaEstreno);
 
                     //agregamos la plataforma
                     contenidoDesdeArchivo.add(pelicula);

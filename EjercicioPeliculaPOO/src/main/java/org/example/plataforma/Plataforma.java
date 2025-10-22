@@ -2,7 +2,7 @@ package org.example.plataforma;
 
 import org.example.exception.PeliculaExistenteExcepcion;
 import org.example.pelicula.Genero;
-import org.example.pelicula.Pelicula;
+import org.example.pelicula.Contenido;
 import org.example.pelicula.ResumenContenido;
 import org.example.util.FileUtils;
 
@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 public class Plataforma {
     //atributo
     private String nombre;
-    private List<Pelicula> contenido;
+    private List<Contenido> contenido;
     //añadiendo un nuevo maoa
-    private Map<Pelicula, Integer> visualizaciones;
+    private Map<Contenido, Integer> visualizaciones;
 
     //pelicula, visualizaciones
     //<Pelicula.titulo, >
@@ -33,10 +33,10 @@ public class Plataforma {
     /**
      * agregar a una lista de la pelicula al this. contenido que le voy asignar un valor
     *  @param  pelicula me ayuda asignarle un elemento al contenido, o sea se hara una lista*/
-    public void agregar(Pelicula pelicula){
+    public void agregar(Contenido pelicula){
 
         //buscamos la pelicula
-        Pelicula contenido =this.buscarPorTitulo(pelicula.getTitulo());
+        Contenido contenido =this.buscarPorTitulo(pelicula.getTitulo());
 
         if (contenido != null){
             //trow se lanza una expecion
@@ -54,7 +54,7 @@ public class Plataforma {
 
     //polimorfismo
     // para la reproduccion depeliculas
-    public void  reproducir(Pelicula contenido){
+    public void  reproducir(Contenido contenido){
         //getdefault para saber como esta en el momento
         //es 0 porque si no tiene nada es que nunca lo han visto
         int conteoActual = visualizaciones.getOrDefault(contenido, 0);
@@ -69,14 +69,14 @@ public class Plataforma {
 
 
     /**eliminar: nos ayuda a eliminar peliculas del listado**/
-    public void eliminar(Pelicula pelicula){
+    public void eliminar(Contenido pelicula){
         this.contenido.remove(pelicula);
     }
 
     /**
      * mostrarTitulos nos ayuda a mostrar el array y recorre para mostrar cada uno**/
     public List<String> getTitulos(){
-        return contenido.stream().map(Pelicula::getTitulo) //clase pelicula obtengo todos los titutlo y lopaso a una lista
+        return contenido.stream().map(Contenido::getTitulo) //clase pelicula obtengo todos los titutlo y lopaso a una lista
                 .toList();
 
         /*public void mostrarTitulos(){
@@ -106,7 +106,7 @@ public class Plataforma {
     /**
      * buscarPorTitulo compracion del titulo que ya tengo con el que ya se tiene como referencia ,
      * retorna el titulo o no**/
-    public Pelicula buscarPorTitulo (String titulo){
+    public Contenido buscarPorTitulo (String titulo){
        /* for (Pelicula pelicula: contenido){ //obtengo el titulo por el get y no directamente por el atributo
             //busqueda
             if (pelicula.getTitulo().equalsIgnoreCase(titulo)){ //si esto es verdadero me regresa la pelicula
@@ -119,7 +119,7 @@ public class Plataforma {
 
         //se retorna el contenid
         //stream -> porque el contenido es una lista, ahora se trabaja como un flujo
-        return contenido.stream().filter((Pelicula contenido)
+        return contenido.stream().filter((Contenido contenido)
                         -> contenido.getTitulo().equalsIgnoreCase(titulo))
                 .findFirst()
                 .orElse(null);
@@ -130,9 +130,9 @@ public class Plataforma {
     /** buscarPorGenero nueva funcion para buscar peliculas por genero
      * devuelve un listado de peliculas
      * @param genero nos ayudara a comparar los tipos de genero**/
-    public List<Pelicula> buscarPorGenero(Genero genero){
+    public List<Contenido> buscarPorGenero(Genero genero){
 
-        return contenido.stream().filter((Pelicula contenido)
+        return contenido.stream().filter((Contenido contenido)
             -> contenido.getGenero().equals(genero))
                 .toList(); //regesa un listado
     }
@@ -140,9 +140,9 @@ public class Plataforma {
     /** buscarIdioma nueva funcion para buscar peliculas por idiomas
      * devuelve un listado de peliculas
      * @param idioma nos ayudara a comparar los tipos de idiomas**/
-    public List<Pelicula> buscarIdioma(Idioma idioma){
+    public List<Contenido> buscarIdioma(Idioma idioma){
 
-        return contenido.stream().filter((Pelicula contenido)
+        return contenido.stream().filter((Contenido contenido)
         -> contenido.getIdioma().equals(contenido))
                 .toList(); //regesa el listado de los idiomas
     }
@@ -150,9 +150,9 @@ public class Plataforma {
     /** buscarIdioma nueva funcion para buscar peliculas por calidad
      * devuelve un listado de peliculas
      * @param calidad nos ayudara a comparar los tipos de calidad exitences**/
-    public List<Pelicula> buscarCalidad(Calidad calidad){
+    public List<Contenido> buscarCalidad(Calidad calidad){
 
-        return contenido.stream().filter((Pelicula contenido)
+        return contenido.stream().filter((Contenido contenido)
                         -> contenido.getCalidad().equals(contenido))
                 .toList(); //regesa el listado de los idiomas
     }
@@ -162,14 +162,14 @@ public class Plataforma {
     public  int getDuracion(){
         //metodo de referencia
         //.sum() = suma todas las duraciones de las peliulas
-        return contenido.stream().mapToInt(Pelicula::getDuracion).sum();
+        return contenido.stream().mapToInt(Contenido::getDuracion).sum();
     }
 
     /**ranking de pelicula**/
-    public List<Pelicula> getPopulares(){
+    public List<Contenido> getPopulares(){
         //reverse necesitamos de la mas baja a la mas alta
         return contenido.stream().sorted(
-                Comparator.comparingDouble(Pelicula::getCalificacion)
+                Comparator.comparingDouble(Contenido::getCalificacion)
                         .reversed()).
                 toList();
     }
@@ -189,18 +189,18 @@ public class Plataforma {
      * Comparator.comparing
      * **/
 
-    public  Pelicula peliculaLarga(){
+    public Contenido peliculaLarga(){
         //basicamente lo compara conla funcion getDurancion y si no me devuelve vacio
-        return contenido.stream().max(Comparator.comparing(Pelicula::getDuracion)).orElse(null);
+        return contenido.stream().max(Comparator.comparing(Contenido::getDuracion)).orElse(null);
     }
 
     /**PeliculaCorta compara todas las peliculas con el metodo .min y los
      * Comparator.comparing
      * **/
 
-    public  Pelicula peliculaCorta(){
+    public Contenido peliculaCorta(){
         //basicamente lo compara conla funcion getDurancion y si no me devuelve vacio
-        return contenido.stream().min(Comparator.comparing(Pelicula::getDuracion)).orElse(null);
+        return contenido.stream().min(Comparator.comparing(Contenido::getDuracion)).orElse(null);
     }
 
     //Filtra las películas con calificación igual o superior a cuatro
@@ -209,8 +209,8 @@ public class Plataforma {
     /**peliculaPopular compara el listado de peliculas para saber cuales son mayores a la
      * calificacion de 4, en esto se utiliza filter que  nos ayuda a filtrar todo el contenido
      * y recolectar la lista en la funcion esPopular de la clase Pelicula**/
-    public List<Pelicula> peliculaPopular(){
-        return contenido.stream().filter((Pelicula contenido)
+    public List<Contenido> peliculaPopular(){
+        return contenido.stream().filter((Contenido contenido)
         -> contenido.esPopular()).collect(Collectors.toList());
     }
 
@@ -218,11 +218,11 @@ public class Plataforma {
         return nombre;
     }
 
-    public List<Pelicula> getContenido() {
+    public List<Contenido> getContenido() {
         return contenido;
     }
 
-    public void setContenido(List<Pelicula> contenido) {
+    public void setContenido(List<Contenido> contenido) {
         this.contenido = contenido;
     }
 }
